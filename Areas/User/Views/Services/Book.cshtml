@@ -1,0 +1,52 @@
+﻿@model PMS_DDAC.Models.ServiceModel
+
+@{
+    ViewData["Title"] = "Book a Service";
+    var properties = ViewBag.Properties as IEnumerable<PMS_DDAC.Models.PropertyModel>;
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-tools icon"></i>Book a Service</h2>
+    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left icon"></i>Back to Services</a>
+</div>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <form asp-action="Book" method="post">
+            <div class="form-group">
+                <label asp-for="ServiceType" class="font-weight-bold"><i class="fas fa-tools icon"></i>Service Type</label>
+                <select asp-for="ServiceType" class="form-control">
+                    <option value="">Select a service</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Plumbing">Plumbing</option>
+                </select>
+                <span asp-validation-for="ServiceType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PropertyId" class="font-weight-bold"><i class="fas fa-home icon"></i>Property</label>
+                <select asp-for="PropertyId" class="form-control">
+                    <option value="">Select a property</option>
+                    @foreach (var property in properties)
+                    {
+                        <option value="@property.PropertyId">@property.Name - @property.Address</option>
+                    }
+                </select>
+                <span asp-validation-for="PropertyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScheduledDate" class="font-weight-bold"><i class="fas fa-calendar-alt icon"></i>Scheduled Date</label>
+                <input asp-for="ScheduledDate" class="form-control" type="date" />
+                <span asp-validation-for="ScheduledDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4">
+                <button type="submit" class="btn btn-success"><i class="fas fa-check icon"></i>Book Service</button>
+                <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-times icon"></i>Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

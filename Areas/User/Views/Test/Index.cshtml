@@ -1,0 +1,45 @@
+﻿@model List<PMS_DDAC.Models.ServiceModel>
+
+@{
+    ViewData["Title"] = "My Services";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>My Services</h2>
+        <p><a asp-action="Book" class="btn btn-primary">Book a New Service</a></p>
+
+        @if (Model.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Service Type</th>
+                        <th>Property</th>
+                        <th>Requested Date</th>
+                        <th>Scheduled Date</th>
+                        <th>Completed Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var service in Model)
+                    {
+                        <tr>
+                            <td>@service.ServiceType</td>
+                            <td>@service.Property?.Address</td>
+                            <td>@service.RequestedDate.ToString("dd MMM yyyy")</td>
+                            <td>@(service.ScheduledDate?.ToString("dd MMM yyyy") ?? "Not Scheduled")</td>
+                            <td>@(service.CompletedDate?.ToString("dd MMM yyyy") ?? "Not Completed")</td>
+                            <td>@service.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No services found. Book a new service to get started!</p>
+        }
+    </div>
+</div>

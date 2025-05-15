@@ -1,0 +1,192 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden; /* Prevents unwanted scrolling */
+    height: 100vh; /* Ensures body takes full viewport height */
+    background: linear-gradient(315deg, rgba(50, 0, 47, 1) 3%, /* Darker purple */
+    rgba(30, 80, 150, 1) 38%, /* Darker blue */
+    rgba(20, 180, 170, 1) 68%, /* Darker cyan */
+    rgba(180, 10, 10, 1) 98% /* Darker red */
+    );
+    background-size: 400% 400%;
+    background-attachment: fixed;
+    /* 🔥 Re-added Animation */
+    animation: gradientMove 15s ease infinite;
+}
+
+/* 🔥 Restored Background Animation */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* Waves container */
+.waves-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50vh; /* Adjusted height for larger waves */
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* Wave Base Styling */
+.wave {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 1000% 1000% 0 0;
+    position: fixed;
+    width: 200%;
+    height: 15em; /* Increased wave height */
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    /* 🔥 Restored Original Wave Animation */
+    animation: waveMotion 10s -3s linear infinite;
+    transform: translate3d(0, 0, 0);
+    opacity: 0.8;
+}
+
+    /* Second wave (slightly lower) */
+    .wave:nth-of-type(2) {
+        bottom: -2em; /* Adjusted for more height */
+        height: 16em; /* Slightly larger */
+        animation: waveMotion 18s linear reverse infinite;
+        opacity: 0.8;
+    }
+
+    /* Third wave (even lower) */
+    .wave:nth-of-type(3) {
+        bottom: -4em; /* Adjusted further */
+        height: 17em; /* Largest wave */
+        animation: waveMotion 20s -1s reverse infinite;
+        opacity: 0.9;
+    }
+
+/* 🔥 Wave Animation */
+@keyframes waveMotion {
+    2% {
+        transform: translateX(1px);
+    }
+
+    25% {
+        transform: translateX(-25%);
+    }
+
+    50% {
+        transform: translateX(-50%);
+    }
+
+    75% {
+        transform: translateX(-25%);
+    }
+
+    100% {
+        transform: translateX(1px);
+    }
+}
+
+
+
+/* Text Box Animation */
+.text-box {
+    text-align: center;
+    padding: 1rem;
+    color: black;
+    max-width: 70%;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+/* Register Button Styling */
+.register-btn {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    padding: 10px 30px;
+    border-radius: 30px;
+    background: rgb(86, 172, 34);
+}
+
+/* Register Button Animation */
+.fade-in-late {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out 0.5s forwards;
+}
+
+/* Fade-In Up Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .wave {
+        height: 35vh;
+    }
+
+        .wave:nth-of-type(2) {
+            bottom: -2vh;
+        }
+
+        .wave:nth-of-type(3) {
+            bottom: -4vh;
+        }
+}
+
+@media (max-width: 768px) {
+    .wave {
+        height: 40vh;
+    }
+
+        .wave:nth-of-type(2) {
+            bottom: -3vh;
+        }
+
+        .wave:nth-of-type(3) {
+            bottom: -6vh;
+        }
+}
+
+@media (max-width: 480px) {
+    .wave {
+        height: 50vh;
+    }
+
+        .wave:nth-of-type(2) {
+            bottom: -5vh;
+        }
+
+        .wave:nth-of-type(3) {
+            bottom: -8vh;
+        }
+
+    .text-box {
+        max-width: 90%;
+        padding: 2rem;
+    }
+
+    .register-btn {
+        font-size: 1.2rem;
+        padding: 8px 20px;
+    }
+}

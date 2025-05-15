@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PMS_DDAC.Models.BillModel>
+
+@{
+    ViewData["Title"] = "Payment History";
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-history icon"></i>Payment History</h2>
+    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left icon"></i>Back to Bills</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle icon"></i>No payment history found.
+    </div>
+}
+else
+{
+    <table class="table table-striped payment-history">
+        <thead>
+            <tr>
+                <th><i class="fas fa-home icon"></i>Property</th>
+                <th><i class="fas fa-money-bill icon"></i>Amount</th>
+                <th><i class="fas fa-calendar-check icon"></i>Paid Date</th>
+                <th><i class="fas fa-info-circle icon"></i>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bill in Model)
+            {
+                <tr>
+                    <td>@bill.Property.Name</td>
+                    <td>@bill.Amount.ToString("C")</td>
+                    <td>@bill.PaidDate?.ToString("dd MMM yyyy")</td>
+                    <td><span class="badge bg-success">@bill.Status</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

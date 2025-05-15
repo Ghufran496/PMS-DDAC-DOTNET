@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PMS_DDAC.Models.ServiceModel>
+
+@{
+    ViewData["Title"] = "Service History";
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-history icon"></i>Service History</h2>
+    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left icon"></i>Back to Services</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle icon"></i>No service history found.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><i class="fas fa-tools icon"></i>Service Type</th>
+                <th><i class="fas fa-home icon"></i>Property</th>
+                <th><i class="fas fa-calendar-alt icon"></i>Requested Date</th>
+                <th><i class="fas fa-calendar-check icon"></i>Completed Date</th>
+                <th><i class="fas fa-info-circle icon"></i>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var service in Model)
+            {
+                <tr>
+                    <td>@service.ServiceType</td>
+                    <td>@service.Property.Name</td>
+                    <td>@service.RequestedDate.ToString("dd MMM yyyy")</td>
+                    <td>@(service.CompletedDate?.ToString("dd MMM yyyy") ?? "N/A")</td>
+                    <td>
+                        <span class="badge @(service.Status == "Completed" ? "bg-success" : "bg-secondary")">
+                            @service.Status
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

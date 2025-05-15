@@ -1,0 +1,69 @@
+﻿DDAC_PMS
+├── AppSettings (Optional)      
+│   └── appsettings.json             // Configuration files
+├── Controllers
+│   ├── HomeController.cs            // Landing page, public or shared
+│   └── AccountController.cs         // Handles Login, Register, Logout
+├── Models
+│   └── (Shared or global models, e.g., User, Property, Payment, etc.)
+├── Views
+│   ├── Home
+│   │   └── Index.cshtml             // Main/home landing page
+│   ├── Account
+│   │   ├── Login.cshtml
+│   │   └── Register.cshtml
+│   ├── Shared
+│   │   ├── _Layout.cshtml
+│   │   └── _ViewImports.cshtml      // Common namespace imports, TagHelpers, etc.
+│   └── _ViewStart.cshtml            // Usually references the shared _Layout
+├── Areas
+│   ├── User
+│   │   ├── Controllers
+│   │   │   ├── DashboardController.cs
+│   │   │   ├── BillsController.cs
+│   │   │   ├── ServicesController.cs
+│   │   │   └── ReportsController.cs
+│   │   ├── Views
+│   │   │   ├── Dashboard
+│   │   │   │   └── Index.cshtml
+│   │   │   ├── Bills
+│   │   │   │   ├── Index.cshtml         // Possibly lists bills, payment history
+│   │   │   │   ├── Pay.cshtml           // Pay Bill form
+│   │   │   │   └── PaymentHistory.cshtml (if you prefer a separate view)
+│   │   │   ├── Services
+│   │   │   │   ├── Index.cshtml         // Service overview / history
+│   │   │   │   └── Book.cshtml          // Booking form
+│   │   │   ├── Reports
+│   │   │   │   ├── Index.cshtml
+│   │   │   │   ├── Electricity.cshtml   // Monthly electricity usage
+│   │   │   │   └── Water.cshtml         // Monthly water usage
+│   │   │   └── Shared (optional)        // Partial views specific to User area
+│   │   └── UserAreaRegistration.cs      // Area route registration (if using conventional routing)
+│   ├── Admin
+│   │   ├── Controllers
+│   │   │   ├── DashboardController.cs
+│   │   │   ├── BillsController.cs
+│   │   │   └── TenantsController.cs
+│   │   ├── Views
+│   │   │   ├── Dashboard
+│   │   │   │   └── Index.cshtml
+│   │   │   ├── Bills
+│   │   │   │   ├── Index.cshtml         // View tenant bills, summary
+│   │   │   │   ├── Create.cshtml        // Create new tenant bills
+│   │   │   │   └── Delete.cshtml        // Delete existing bills
+│   │   │   └── Tenants
+│   │   │       ├── Index.cshtml        // Show tenant details
+│   │   │       ├── Add.cshtml          // Add new tenant
+│   │   │       ├── Modify.cshtml       // Modify tenant details
+│   │   │       ├── Delete.cshtml       // Delete tenant
+│   │   │       ├── Allocate.cshtml     // Allocate tenant to a room
+│   │   │       └── ModifyRoomName.cshtml (optional if you separate that action)
+│   │   └── AdminAreaRegistration.cs     // Area route registration (if using conventional routing)
+├── wwwroot
+│   ├── css
+│   ├── js
+│   └── (static assets)
+├── Program.cs                           // ASP.NET Core entry point
+├── DDAC_PMS.csproj                      // Project file
+└── Properties
+    └── launchSettings.json

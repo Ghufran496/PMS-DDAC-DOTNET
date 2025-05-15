@@ -1,0 +1,101 @@
+﻿@page
+@model PMS_DDAC.Models.Admin.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<div class="row">
+    <!-- Paid Bills -->
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Paid Bills</h5>
+                <p class="card-text display-4">@Model.PaidBillsCount</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unpaid Bills -->
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Unpaid Bills</h5>
+                <p class="card-text display-4">@Model.UnpaidBillsCount</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paid Income -->
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Paid Income</h5>
+                <p class="card-text display-4">RM @Model.PaidIncome.ToString("N2")</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unpaid Income -->
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Unpaid Income</h5>
+                <p class="card-text display-4">RM @Model.UnpaidIncome.ToString("N2")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Water Bill -->
+    <div class="col-md-6">
+        <div class="card text-dark bg-light mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Water Bill</h5>
+                <p class="card-text display-4">RM @Model.TotalWaterBill.ToString("N2")</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Electricity Bill -->
+    <div class="col-md-6">
+        <div class="card text-dark bg-light mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Electricity Bill</h5>
+                <p class="card-text display-4">RM @Model.TotalElectricityBill.ToString("N2")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upcoming Services -->
+<h3 class="mt-4">Upcoming Services</h3>
+@if (Model.UpcomingServices.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Service Name</th>
+                <th>Scheduled Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var service in Model.UpcomingServices)
+            {
+                <tr>
+                    <td>@service.ServiceType</td>
+                    <td>@(service.ScheduledDate?.ToString("dd MMM yyyy") ?? "No Date")</td>
+                    <td>@service.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No upcoming services.</p>
+}
+

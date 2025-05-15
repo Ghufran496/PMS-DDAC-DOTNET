@@ -1,0 +1,42 @@
+﻿@model PMS_DDAC.Models.ServiceModel
+
+@{
+    ViewData["Title"] = "Book a Service";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Book a Service</h2>
+        <form asp-action="Book" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="PropertyId" class="control-label">Property</label>
+                <select asp-for="PropertyId" class="form-control" asp-items="@(new SelectList(ViewBag.Properties, "PropertyId", "Address"))">
+                    <option value="">Select a property</option>
+                </select>
+                <span asp-validation-for="PropertyId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ServiceType" class="control-label">Service Type</label>
+                <select asp-for="ServiceType" class="form-control">
+                    <option value="">Select a service</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Repair">Repair</option>
+                </select>
+                <span asp-validation-for="ServiceType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Book Service" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

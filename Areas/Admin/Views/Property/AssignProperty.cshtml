@@ -1,0 +1,117 @@
+﻿@model PMS_DDAC.Models.ViewModels.AssignPropertyViewModel
+
+@{
+    ViewData["Title"] = "Assign Property to Tenant";
+}
+
+<div class="assign-property-container">
+    <h2>Assign Property to Tenant</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    <form asp-action="AssignProperty" method="post">
+        <div class="form-group">
+            <label for="rentalMode">Rental Mode</label>
+            <select asp-for="RentalMode" class="form-control">
+                <option value="">-- Select Property --</option>
+                <option value="Room">Room</option>
+                <option value="Unit">Unit</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="selectedProperty">Select Property</label>
+            <select asp-for="SelectedPropertyId" asp-items="Model.Properties" class="form-control">
+                <option value="">-- Select Property --</option>
+            </select>
+        </div>
+
+
+        <div class="form-group" id="roomSelection" style="display: none;">
+            <label for="SelectedRoomId">Select Room</label>
+            <select asp-for="SelectedRoomId" class="form-control">
+                <option value="">-- Select Room --</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:10px;">
+            <label for="selectedTenants">Select Tenants</label>
+            <select asp-for="SelectedTenantId" asp-items="Model.Tenants" multiple class="form-control"></select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Assign</button>
+    </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Event handler for Rental Mode change
+       $("#RentalMode").change(function () {
+            var selectedMode = $(this).val();
+
+            $.ajax({
+                url: "/Admin/AssignProperty/GetProperties", // Ensure this matches your controller route
+                type: "GET",
+                data: { rentalMode: selectedMode },
+                success: function (response) {
+                    var propertyDropdown = $("#SelectedPropertyId");
+                    propertyDropdown.empty();
+                    propertyDropdown.append('<option value="">-- Select Property --</option>');
+
+                    $.each(response, function (index, property) {
+                        propertyDropdown.append($('<option>', {
+                            value: property.value,
+                            text: property.text
+                        }));
+                    });
+                },
+                error: function () {
+                    alert("Error fetching properties.");
+                }
+            });
+        });
+
+        // Event handler for Property selection change (Fetching Rooms if rental mode is 'Room')
+        $("#SelectedPropertyId").change(function () {
+            var propertyId = $(this).val();
+            var rentalMode = $("#RentalMode").val(); // Get the current rental mode
+
+            if (rentalMode === "Room" && propertyId) {
+                $.ajax({
+                    url: "/Admin/AssignProperty/GetRooms",
+                    type: "GET",
+                    data: { propertyId: propertyId },
+                    success: function (response) {
+                        var roomDropdown = $("#SelectedRoomId");
+                        roomDropdown.empty();
+                        roomDropdown.append('<option value="">-- Select Room --</option>');
+
+                        $.each(response, function (index, room) {
+                            roomDropdown.append($('<option>', {
+                                value: room.value,
+                                text: room.text
+                            }));
+                        });
+
+                        $("#roomSelection").show(); // Show room selection when rooms exist
+                    },
+                    error: function () {
+                        alert("Error fetching rooms.");
+                    }
+                });
+            } else {
+                $("#roomSelection").hide(); // Hide room selection if not applicable
+                $("#SelectedRoomId").empty().append('<option value="">-- Select Room --</option>');
+            }
+            
+        });
+    });
+</script>

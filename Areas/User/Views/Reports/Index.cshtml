@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-chart-bar icon"></i>Reports</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-bolt icon"></i>Electricity Report</h5>
+                <p>View your monthly electricity bill reports.</p>
+                <a asp-action="Electricity" class="btn btn-primary"><i class="fas fa-eye icon"></i>View Report</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-tint icon"></i>Water Report</h5>
+                <p>View your monthly water bill reports.</p>
+                <a asp-action="Water" class="btn btn-primary"><i class="fas fa-eye icon"></i>View Report</a>
+            </div>
+        </div>
+    </div>
+</div>

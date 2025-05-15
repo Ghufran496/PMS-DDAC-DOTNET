@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model PMS_DDAC.Models.ViewModels.TenantCompositeViewModel
+@inject SignInManager<PMS_DDAC.Models.UserModel> SignInManager
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="container">
+    <h2>Tenant Profile</h2>
+    <form method="post" asp-action="UpdateProfile">
+        <!-- Ensure FormType is sent to identify the form -->
+        <input type="hidden" name="FormType" value="UpdateProfile" />
+
+        <div>
+            <label asp-for="Profile.FullName"></label>
+            <input asp-for="Profile.FullName" name="FullName" value="@Model.Profile.FullName" />
+        </div>
+        <div>
+            <label asp-for="Profile.Email"></label>
+            <input asp-for="Profile.Email" name="Email" value="@Model.Profile.Email" />
+        </div>
+        <div>
+            <label asp-for="Profile.PhoneNumber"></label>
+            <input asp-for="Profile.PhoneNumber" name="PhoneNumber" value="@Model.Profile.PhoneNumber" />
+        </div>
+
+        <button type="submit">Update Profile</button>
+    </form>
+
+    <hr />
+
+    <h3>Change Password</h3>
+    <form method="post" asp-action="ChangePassword">
+        <input type="hidden" name="FormType" value="ChangePassword" />
+
+        <div>
+            <label asp-for="Password.CurrentPassword"></label>
+            <input asp-for="Password.CurrentPassword" type="password" />
+        </div>
+        <div>
+            <label asp-for="Password.NewPassword"></label>
+            <input asp-for="Password.NewPassword" type="password" />
+        </div>
+        <div>
+            <label asp-for="Password.ConfirmNewPassword"></label>
+            <input asp-for="Password.ConfirmNewPassword" type="password" />
+        </div>
+
+        <button type="submit">Change Password</button>
+    </form>
+
+    <hr />
+
+    <h3>Activate as Owner</h3>
+    <form method="post" asp-action="ActivateOwner">
+        <div>
+            <label asp-for="Owner.ActivationCode"></label>
+            <input asp-for="Owner.ActivationCode" />
+        </div>
+        <button type="submit">Activate</button>
+    </form>
+    <hr />
+    <h3 style="text-align:center">Delete Tenant Account (FOR DEVELOPMENT ONLY)</h3>
+    <form method="post" asp-action="DeleteAccount" style="background-color: LightGoldenRodYellow" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+        <button type="submit" class="btn btn-danger mx-auto d-block" style="background: red">Delete My Account</button>
+    </form>
+</div>

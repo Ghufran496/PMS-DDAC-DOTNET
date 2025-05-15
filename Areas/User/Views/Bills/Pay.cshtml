@@ -1,0 +1,71 @@
+﻿@model PMS_DDAC.Models.BillModel
+
+@{
+    ViewData["Title"] = "Pay Bill";
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#payButton').click(function (e) {
+                e.preventDefault();
+                $('#confirmPaymentModal').modal('show');
+            });
+
+            $('#confirmPayment').click(function () {
+                $('#payForm').submit();
+            });
+        });
+    </script>
+}
+
+<h2><i class="fas fa-credit-card icon"></i>Pay Bill</h2>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h5 class="card-title"><i class="fas fa-file-invoice icon"></i>Bill Details</h5>
+        <p><strong><i class="fas fa-home icon"></i>Property:</strong> @Model.Property.Name</p>
+        <p><strong><i class="fas fa-money-bill icon"></i>Amount:</strong> @Model.Amount.ToString("C")</p>
+        <p><strong><i class="fas fa-calendar-alt icon"></i>Due Date:</strong> @Model.DueDate.ToString("dd MMM yyyy")</p>
+        <p>
+            <strong><i class="fas fa-info-circle icon"></i>Status:</strong>
+            @if (Model.Status == "Paid")
+            {
+                <span class="badge bg-success">@Model.Status</span>
+            }
+            else if (Model.DueDate < DateTime.UtcNow && Model.Status == "Unpaid")
+            {
+                <span class="badge bg-danger">Overdue</span>
+            }
+            else
+            {
+                <span class="badge bg-warning">@Model.Status</span>
+            }
+        </p>
+
+        <form id="payForm" asp-action="Pay" method="post">
+            <input type="hidden" asp-for="BillId" />
+            <button type="button" id="payButton" class="btn btn-success"><i class="fas fa-check icon"></i>Confirm Payment</button>
+            <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-times icon"></i>Cancel</a>
+        </form>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmPaymentModal" tabindex="-1" aria-labelledby="confirmPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmPaymentModalLabel"><i class="fas fa-exclamation-circle icon"></i>Confirm Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to pay <strong>@Model.Amount.ToString("C")</strong> for this bill?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times icon"></i>Cancel</button>
+                <button type="button" id="confirmPayment" class="btn btn-success"><i class="fas fa-check icon"></i>Pay Now</button>
+            </div>
+        </div>
+    </div>
+</div>

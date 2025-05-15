@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "secretStore": null,
+      "resourceId": null,
+      "type": "secrets.user",
+      "connectionId": null
+    },
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:PMS_DDACContextConnection"
+    },
+    "mssql2": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:AppContextConnection"
+    },
+    "sqlite1": {
+      "ignored": "true",
+      "type": "sqlite"
+    },
+    "secrets2": {
+      "type": "secrets.user"
+    }
+  }
+}

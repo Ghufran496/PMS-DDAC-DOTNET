@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var roles = user != null ? await UserManager.GetRolesAsync(user) : new List<string>();
+}
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>Menu</h3>
+    </div>
+    <ul class="sidebar-menu">
+        @if (roles.Contains("Owner"))
+        {
+            <li><a asp-area="" asp-controller="Owner" asp-action="Dashboard">🏠 Owner Dashboard</a></li>
+            <li><a asp-area="" asp-controller="Bills" asp-action="Index">📑 Bills</a></li>
+            <li><a asp-area="Admin" asp-controller="AssignProperty" asp-action="AssignProperty">👥 Tenants</a></li>
+            <li><a asp-area="" asp-controller="Properties" asp-action="Index">🏢 Properties</a></li>
+            <li><a asp-area="Admin" asp-controller="OwnerProfile" asp-action="Index">👤 Profile</a></li>
+            <li><a asp-area="Admin" asp-controller="Property" asp-action="Setup">🏢 Setup Properties (DEV)</a></li>
+        }
+        else if (roles.Contains("Tenant"))
+        {
+            <li><a asp-area="User" asp-controller="Tenant" asp-action="Dashboard">🏠 Tenant Dashboard</a></li>
+            <li><a asp-area="User" asp-controller="Bills" asp-action="Index">📑 Bills</a></li>
+            <li><a asp-area="User" asp-controller="Services" asp-action="Index">🛠 Services</a></li>
+            <li><a asp-area="User" asp-controller="Reports" asp-action="Index">📊 Reports</a></li>
+            <li><a asp-area="User" asp-controller="TenantProfile" asp-action="Index">👤 Profile</a></li>
+
+        }
+    </ul>
+
+    <!-- Logout Button (Only Show If User is Logged In) -->
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="sidebar-footer">
+            <form method="post" asp-area="Identity" asp-page="/Account/Logout">
+                <button type="submit" class="logout-btn" style="background: red">🚪 Logout</button>
+            </form>
+        </div>
+    }
+</div>
